@@ -6,6 +6,7 @@ import empty from "./assets/empty.jpg";
 import { Grid, Typography, Button, Tooltip } from "@mui/material";
 import GlitchClip from "react-glitch-effect/core/GlitchClip";
 import InfiniteIcon from "@mui/icons-material/AllInclusiveRounded";
+import { useMediaQuery } from 'react-responsive'
 const url =
   "https://drive.google.com/uc?export=view&id=1ZBpWLu4WjMSWgFpQJ-w6Ma86H4OYmGsY";
 function App() {
@@ -18,6 +19,11 @@ function App() {
   function actualHours() {
     return Math.floor(Math.random() * (24 - 0 + 1) + 0);
   }
+
+  const isonBigScreen = useMediaQuery({ query: '(min-width: 1824px)' })
+  const isonTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const isonPortrait = useMediaQuery({ query: '(orientation: portrait)' })
+  const isonRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' })
   const [brokenSecond, setbrokenSecond] = useState(actualSeconds());
   const [brokenMinute, setbrokenMinute] = useState(actualMinutes());
   const [brokenHour, setbrokenHour] = useState(actualHours());
@@ -71,7 +77,12 @@ function App() {
           }}>
           <header
             className='App-header'
-            style={{
+            style={isonTabletOrMobile ? {
+              backgroundImage: "url(" + mural + ")",
+              backgroundSize: "85%",
+              cursor: "none",
+              pointerEvents: "none",
+            } : {
               backgroundImage: "url(" + mural + ")",
               backgroundSize: "75%",
               cursor: "none",
@@ -81,10 +92,10 @@ function App() {
             <Grid container direction='column' justifyContent='center'>
               <Grid item>
                 {selected ? (
-                  <GlitchClip duration={5}>
+                  <GlitchClip duration={6}>
                     <Typography
                       variant='h1'
-                      sx={{ boxShadow: 20, fontSize: 200 }}>
+                      sx={isonTabletOrMobile ? { boxShadow: 20, fontSize: 90 } : { boxShadow: 20, fontSize: 200 }}>
                       {`${brokenHour < 10 ? "0" + brokenHour : brokenHour}:${
                         brokenMinute < 10 ? "0" + brokenMinute : brokenMinute
                       }:${
@@ -93,10 +104,10 @@ function App() {
                     </Typography>
                   </GlitchClip>
                 ) : (
-                  <GlitchClip disabled duration={5}>
+                  <GlitchClip disabled duration={6}>
                     <Typography
                       variant='h1'
-                      sx={{ boxShadow: 20, fontSize: 200 }}>
+                      sx={isonTabletOrMobile ? { boxShadow: 20, fontSize: 90 } : { boxShadow: 20, fontSize: 200 }}>
                       {`${hours < 10 ? "0" + hours : hours}:${
                         minutes < 10 ? "0" + minutes : minutes
                       }:${seconds < 10 ? "0" + seconds : seconds}`}
@@ -148,7 +159,7 @@ function App() {
                   <GlitchClip duration={5}>
                     <Typography
                       variant='h1'
-                      sx={{ boxShadow: 20, fontSize: 200 }}>
+                      sx={isonTabletOrMobile ? { boxShadow: 20, fontSize: 90 } : { boxShadow: 20, fontSize: 200 }}>
                       {`${brokenHour < 10 ? "0" + brokenHour : brokenHour}:${
                         brokenMinute < 10 ? "0" + brokenMinute : brokenMinute
                       }:${
@@ -160,7 +171,7 @@ function App() {
                   <GlitchClip disabled duration={5}>
                     <Typography
                       variant='h1'
-                      sx={{ boxShadow: 20, fontSize: 200 }}>
+                      sx={isonTabletOrMobile ? { boxShadow: 20, fontSize: 90 } :{ boxShadow: 20, fontSize: 200 }}>
                       {`${hours < 10 ? "0" + hours : hours}:${
                         minutes < 10 ? "0" + minutes : minutes
                       }:${seconds < 10 ? "0" + seconds : seconds}`}
